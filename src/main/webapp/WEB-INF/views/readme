@@ -88,4 +88,28 @@ mybatis 검색
 package 만들기 ------------------------------
 	com.jbedu.mybatis
 		> mapper, dao, dto, controller 만들기 
+		
+----------------------------------------------
+dao, mapper에 같은 이름으로 확장자만 다르게 만들기
+			
+			dao에 interface로 BoardDao 만들기
+			mapper에 BoardMapper.xml 만들기
+				BoardMapper.xml에 선언하기
+					<!DOCTYPE mapper
+					    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+					    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+controller패키지에 BoardController클래스 만듬
+	@Autowired
+	private SqlSession sqlSessoin; //의존성 자동주입 > DI
+	
+	@Controller
+	public class BoardController {
+		@RequestMapping(value ="write_form")
+		public String write_form() {
+			return "write_form";
+		}
+		
+}
 	
