@@ -1,7 +1,31 @@
 라이브러리 주소
 https://mvnrepository.com/
-spring-jdbc 
+spring-jdbc 또는 mysql 등등 라이버리리
 아이콘 모양에 따라 부트용 스프링용 다름
+
+mybatis 검색
+	mybatis 와 MyBatis Spring 받기
+		버전 mybatis 3.2.8
+		버전 MyBatis Spring 1.2.2
+
+		<!-- Mybatis 라이브러리 -->
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
+		    <version>3.2.8</version>
+		</dependency>
+		
+		
+		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis-spring -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		    <version>1.2.2</version>
+		</dependency>
+	
+
+
 
 
 새 프로젝트
@@ -27,4 +51,10 @@ spring-jdbc
 				<version>4.1.4.RELEASE</version>
 			</dependency>
 			
+			<!-- MySQL JDBC 라이브러리 -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>8.0.31</version>
+			</dependency>
 	
