@@ -1,0 +1,30 @@
+라이브러리 주소
+https://mvnrepository.com/
+spring-jdbc 
+아이콘 모양에 따라 부트용 스프링용 다름
+
+
+새 프로젝트
+ 프로젝트이름 작성 - mvc
+   패키지 - com.jbedu.mybtis
+
+   
+   servlet-context.xml
+    	beans:bean 작성
+    		<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+				<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
+				<beans:property name="url" value="jdbc:mysql://localhost:3306/jsp_project"></beans:property>
+				<beans:property name="username" value="root"></beans:property>
+				<beans:property name="password" value="12345"></beans:property>
+			</beans:bean>
+			
+	pom.xml 
+		</dependencies> 바로 위에 작성
+			<!-- JDBC 라이브러리  -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>4.1.4.RELEASE</version>
+			</dependency>
+			
+	
