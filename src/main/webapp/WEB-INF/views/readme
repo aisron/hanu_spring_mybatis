@@ -42,6 +42,8 @@ mybatis 검색
 				<beans:property name="password" value="12345"></beans:property>
 			</beans:bean>
 			
+			
+			
 	pom.xml 
 		</dependencies> 바로 위에 작성
 			<!-- JDBC 라이브러리  -->
@@ -57,4 +59,33 @@ mybatis 검색
 				<artifactId>mysql-connector-java</artifactId>
 				<version>8.0.31</version>
 			</dependency>
+			
+			
+		servlet-context.xml
+						  
+		   // classpath 는 경로지정			
+		   // <beans:property 는 멤버변수
+		
+				<!-- 	mybatis 사용시 필수 요소 -->	
+				<beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+					<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"></beans:property>
+					<beans:property name="url" value="jdbc:mysql://localhost:3306/jsp_project"></beans:property>
+					<beans:property name="username" value="root"></beans:property>
+					<beans:property name="password" value="12345"></beans:property>
+				</beans:bean>
+				
+				<beans:bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+					<beans:property name="dataSource" ref="dataSource"></beans:property>
+					<beans:property name="mapperLocations" value="classpath:com/jbedu/mybatis/mapper/*.xml"></beans:property>
+					<!-- 밸류는 패키지 위치 <beans:property name="mapperLocations" value="classpath:com/jbedu/mybatis/mapper/*.xml"></beans:property> -->
+				</beans:bean>  		
+					
+				<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+					<beans:constructor-arg index="0" ref="sqlSessionFactory"></beans:constructor-arg>
+				</beans:bean>	     
+				<!-- /mybatis 사용시 필수 요소 -->	
+		
+package 만들기 ------------------------------
+	com.jbedu.mybatis
+		> mapper, dao, dto, controller 만들기 
 	
