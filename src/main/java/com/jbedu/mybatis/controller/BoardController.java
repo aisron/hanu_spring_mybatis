@@ -65,10 +65,10 @@ public class BoardController {
 			
 			model.addAttribute("msg", "이미 삭제된 글번호 입니다.");
 			model.addAttribute("url", "boardList");
-			
+			  
 			return "alert";
 		} 
-		
+		  
 		
 		return "redirect:boardList";
 	}
