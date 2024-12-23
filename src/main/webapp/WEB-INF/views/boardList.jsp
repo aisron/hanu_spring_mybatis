@@ -6,7 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
+
 <body>
 	<h2> 게시판 글 목록</h2>
 	<!-- for문 돌리기 -->
@@ -14,7 +16,10 @@
 	
 	<!-- 컨트롤러에 모델에 bDtos-->
 	<c:forEach var="bDto" items="${bDtos }">
-		${bDto.bnum} / ${bDto.bname }  / ${bDto.btitle }  / ${bDto.bdate } / ${bDto.bhit } <br> 
+		<a href="contentView?bnum=${bDto.bnum}">
+			${bDto.bnum} / ${bDto.bname }  / ${bDto.btitle }  / ${bDto.bdate } / ${bDto.bhit }
+		</a> 
+		<br> 
 	</c:forEach>
 	
 	

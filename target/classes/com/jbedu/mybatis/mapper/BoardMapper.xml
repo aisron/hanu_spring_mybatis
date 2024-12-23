@@ -17,9 +17,12 @@
 		DELETE FROM mvc_board WHERE bnum=#{param1}
 	</delete>
 
-
-
-</mapper>
+ 	
+		
+	<select id="contentViewDao" resultType="com.jbedu.mybatis.dto.BoardDto">
+		SELECT * FROM mvc_board WHERE bnum=#{param1}
+	</select>
+	</mapper>
     
 
 <!-- <?xml version="1.0" encoding="UTF-8"?>

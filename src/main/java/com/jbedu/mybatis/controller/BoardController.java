@@ -15,70 +15,82 @@ import com.jbedu.mybatis.dto.BoardDto;
 
 @Controller
 public class BoardController {
-	
+
 	@Autowired
-	private SqlSession sqlSession;//의존성 자동 주입 -> DI	
-	
+	private SqlSession sqlSession;// 의존성 자동 주입 -> DI
+
 	@RequestMapping(value = "/write_form")
 	public String write_form(HttpServletRequest request, Model model) {
 		return "write_form";
 	}
+
 	@RequestMapping(value = "/delete_form")
 	public String delete_form(HttpServletRequest request, Model model) {
 		return "delete_form";
 	}
-	
+
 	@RequestMapping(value = "/writeOk")
 	public String boardWrite(HttpServletRequest request, Model model) {
-		
+
 		String bname = request.getParameter("bname");
 		String btitle = request.getParameter("btitle");
 		String bcontent = request.getParameter("bcontent");
-		
+
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		boardDao.boardWriteDao(bname, btitle, bcontent);
-		
+		int insertFlag= boardDao.boardWriteDao(bname, btitle, bcontent);
+		if (insertFlag == 1) {// 존재하지 않는 글번호 삭제 시도->삭제 실패
+
+			model.addAttribute("msg", "글 입력 성공");
+			model.addAttribute("url", "boardList");
+
+			return "alert";
+		}
 		return "redirect:boardList";
 	}
-	
+
 	@RequestMapping(value = "/boardList")
 	public String boardList(HttpServletRequest request, Model model) {
-		
+
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		
+
 		ArrayList<BoardDto> boardDtos = boardDao.boardListDao();
-		
+
 		model.addAttribute("bDtos", boardDtos);
-		
+
 		return "boardList";
 	}
-	
+
 	@RequestMapping(value = "/deleteOk")
 	public String boardDelete(HttpServletRequest request, Model model) {
-		
+
 		String bnum = request.getParameter("bnum"); // 삭제할 글 넘버
-		
+
 		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
-		int deleteFlag =boardDao.boardDeleteDao(bnum);
+		int deleteFlag = boardDao.boardDeleteDao(bnum);
 //		System.out.println(deleteFlag);
-		if(deleteFlag == 0) {//존재하지 않는 글번호 삭제 시도->삭제 실패
-			
+		if (deleteFlag == 0) {// 존재하지 않는 글번호 삭제 시도->삭제 실패
+
 			model.addAttribute("msg", "이미 삭제된 글번호 입니다.");
 			model.addAttribute("url", "boardList");
-			  
+
 			return "alert";
-		} 
-		  
-		
+		}
+
 		return "redirect:boardList";
 	}
+	@RequestMapping(value = "/contentView")//글 내용 보기
+	public String contentView(HttpServletRequest request, Model model) {
+		
+		String bnum = request.getParameter("bnum");//내용을 출력할 글의 번호(유저가 클릭한 글 번호)		
+		
+		BoardDao boardDao = sqlSession.getMapper(BoardDao.class);
+		BoardDto boardDto = boardDao.contentViewDao(bnum);
+		model.addAttribute("bDto", boardDto);
+		
+		return "content_view";
+	}
 	
-	
-	
-	
-	
-	
-	
+
 }
 
 //package com.jbedu.mybatis.controller;
