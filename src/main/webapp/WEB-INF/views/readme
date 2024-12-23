@@ -42,7 +42,21 @@ mybatis 검색
 				<beans:property name="password" value="12345"></beans:property>
 			</beans:bean>
 			
-			
+	web.xml
+		<!-- 한글 처리 -->
+		<filter>
+			<filter-name>encodingFilter</filter-name>
+			<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>	
+		
+			<init-param>
+				<param-name>encoding</param-name>
+				<param-value>UTF-8</param-value>
+			</init-param>
+		</filter>
+		<filter-mapping>
+			<filter-name>encodingFilter</filter-name>
+			<url-pattern>/*</url-pattern>
+		</filter-mapping>		
 			
 	pom.xml 
 		</dependencies> 바로 위에 작성
@@ -112,4 +126,68 @@ controller패키지에 BoardController클래스 만듬
 		}
 		
 }
+
+
+
+BaordDao 
+	글쓰기 넘길 dao
+		public void boardWriteDao(String bname, String btitle, String bcontent); // 글쓰기
+	
+	
+	
+controller에서
+	폼에서 받은 writeOK 작성
+		@RequestMapping(value="/writeOK")
+		public String boardWrite(HttpServletRequest request, Model model) {	
+			String bname = request.getParameter("bname");
+			String btitle = request.getParameter("btitle");
+			String bcontent = request.getParameter("bcontent");
+			
+			// BoardDao 뽑아야 하는데 인터페이스라서 new 생성자 안됨 그래서 sqlSessoin에서 봅아온다.
+			BoardDao baordDao = sqlSessoin.getMapper(BoardDao.class);
+			baordDao.boardWriteDao(bname, btitle, bcontent);
+					
+					
+			return "redirect:boardList";//
+		}
+
+
+	
+BoardMapper.xml  ---
+
+	<!-- 짝의 이름을 적어준다.패키지까지  짝궁은 한놈만 된다-->
+	<!-- 짝의이름 BoardDao 패키지 com.jbedu.mybatis.dao.  -->
+	<mapper namespace="com.jbedu.mybatis.dao.BoardDao">
+		<!-- 여기도 짝의 이름 -->
+		<insert id="boardWriteDao">
+															<!-- 		? 대신에 	#{param1} 순번대로 bhit는 입력 받는게 아님 -->
+				INSERT INTO mvc_board(bname, btitle, bcontent, bhit) VALUES (#{param1},#{param2},#{param3},0)
+		</insert>
+	</mapper>
+	
+글목록 ---------
+BoardController
+ @RequestMapping(value="/boardlist")
+	public String boardList(HttpServletRequest request, Model model) {	
+			
+		// BoardDao 뽑아야 하는데 인터페이스라서 new 생성자 안됨 그래서 sqlSessoin에서 봅아온다.
+		BoardDao baordDao = sqlSessoin.getMapper(BoardDao.class);
+		
+		
+		return "boardList"; // 단순 경로 지정
+	}
+	
+	
+	
+글삭제 -----
+dao
+	public void boardDeleteDao(String bnum); //글삭제
+
+	
+mapper
+	<select id="boardDeleteDao" >
+		DELETE FROM mvc_board WHERE bnum = #{parma1}
+	</select>
+
+controller
 	
